@@ -55,3 +55,15 @@ Clone the repo and run:
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
+
+Make sure you have Ollama installed locally and the required models pulled:
+ollama pull phi
+ollama pull gemma:2b
+
+📂 Project Structure
+├── code
+    ├── app.py                          # Streamlit frontend
+    ├── function_numbers_generator.py   # Main agent logic
+    ├── code_execution.py               # Functions that are used to clean the code and execute it
+    ├── memory.py                       # Functions that are used to manage the memory
+├── data                                # It contains synthetic datasets for testing
