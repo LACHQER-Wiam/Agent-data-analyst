@@ -54,13 +54,16 @@ Clone the repo and run:
 
 ```bash
 pip install -r requirements.txt
-streamlit run app.py```
+streamlit run app.py
 
+```markdown
 Make sure you have Ollama installed locally and the required models pulled:
+
 ```bash
 ollama pull phi
 ollama pull gemma:2b```
 
+```markdown
 📂 Project Structure
 ├── code
     ├── app.py                          # Streamlit frontend
