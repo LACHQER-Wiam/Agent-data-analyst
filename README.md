@@ -47,7 +47,7 @@ Phi-2 receives the question and generates the corresponding Python code → the 
 - 📥 **Export features**: download the extracted tables 
 
 ---
-
+```bash
 📂 Project Structure
 ├── code
     ├── app.py                          # Streamlit frontend
@@ -55,7 +55,7 @@ Phi-2 receives the question and generates the corresponding Python code → the 
     ├── code_execution.py               # Functions that are used to clean the code and execute it
     ├── memory.py                       # Functions that are used to manage the memory
 ├── data                                # It contains synthetic datasets for testing
-
+```
 ---
 
 ## ▶️ Getting Started
