@@ -47,8 +47,10 @@ Phi-2 receives the question and generates the corresponding Python code → the 
 - 📥 **Export features**: download the extracted tables 
 
 ---
-```bash
+
 📂 Project Structure
+
+```bash
 ├── code
     ├── app.py                          # Streamlit frontend
     ├── function_numbers_generator.py   # Main agent logic
