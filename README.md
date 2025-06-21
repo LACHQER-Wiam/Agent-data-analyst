@@ -48,22 +48,6 @@ Phi-2 receives the question and generates the corresponding Python code → the 
 
 ---
 
-## ▶️ Getting Started
-
-Clone the repo and run:
-
-```bash
-pip install -r requirements.txt
-streamlit run app.py
-
-```markdown
-Make sure you have Ollama installed locally and the required models pulled:
-
-```bash
-ollama pull phi
-ollama pull gemma:2b```
-
-```markdown
 📂 Project Structure
 ├── code
     ├── app.py                          # Streamlit frontend
@@ -71,3 +55,20 @@ ollama pull gemma:2b```
     ├── code_execution.py               # Functions that are used to clean the code and execute it
     ├── memory.py                       # Functions that are used to manage the memory
 ├── data                                # It contains synthetic datasets for testing
+
+---
+
+## ▶️ Getting Started
+
+Clone the repo and run:
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+Make sure you have Ollama installed locally and the required models pulled:
+
+```bash
+ollama pull phi
+ollama pull gemma:2b```
+
