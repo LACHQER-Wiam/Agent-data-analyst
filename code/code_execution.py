@@ -28,19 +28,15 @@ def cleaning_code(code_str):
 ################
 def execute_code_safely(code, local_vars={}):
 
-    # Step 1: Clean the code
-    clean_code = cleaning_code(code)
-    print(clean_code)
-
     # Step 2: Basic security check — forbid dangerous patterns
     forbidden_keywords = ['import os', 'os.system', 'subprocess', 'eval', 'exec', '__import__', 'open(', 'write(', 'delete', 'shutil']
     for keyword in forbidden_keywords:
-        if keyword in clean_code:
+        if keyword in code:
             return f"Security error: usage of '{keyword}' is not allowed."
 
     # Step 3: Try to execute
     try:
-        exec(clean_code, local_vars)
+        exec(code, local_vars)
         return local_vars.get("result", "The variable 'result' is not defined.")
     except Exception as e:
         return f"Error during execution: {str(e)}"
