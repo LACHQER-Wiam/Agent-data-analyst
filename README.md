@@ -48,7 +48,7 @@ Phi-2 receives the question and generates the corresponding Python code → the 
 
 ---
 
-📂 Project Structure
+## 📂 Project Structure
 
 ```bash
 ├── code
