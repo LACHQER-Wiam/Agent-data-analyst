@@ -62,28 +62,81 @@ for question, answer, code in st.session_state.chat_history:
         st.markdown("**💻 Python Code:**")
         st.code(code, language="python")
 
+# # --- Input utilisateur ---
+# st.markdown("---")
+# user_input = st.text_input("💬 Your question:", key="user_input")
+
+# if st.button("Analyze") and df is not None and st.session_state.user_input:
+#     question = st.session_state.user_input
+
+#     with st.spinner("🤖 Processing..."):
+#         try:
+#             code, answer = process_questions(file_name, question, table_description, generate_dataframe=)
+#         except Exception as e:
+#             code = ""
+#             answer = f"💥 Error while analyzing: {e}"
+
+#     # Ajouter à l'historique
+#     st.session_state.chat_history.append((question, answer, code))
+
+#     st.markdown(f"**🧑 You:** {question}")
+#     col1, col2 = st.columns([2, 3])
+#     with col1:
+#         st.markdown("**📊 Answer:**")
+#         st.success(answer)
+#     with col2:
+#         st.markdown("**💻 Python Code:**")
+#         st.code(code, language="python")
+
+
+
 # --- Input utilisateur ---
 st.markdown("---")
 user_input = st.text_input("💬 Your question:", key="user_input")
 
-if st.button("Analyze") and df is not None and st.session_state.user_input:
-    question = st.session_state.user_input
+col_analyze, col_download = st.columns(2)
 
-    with st.spinner("🤖 Processing..."):
-        try:
-            code, answer = process_questions(file_name, question, table_description)
-        except Exception as e:
-            code = ""
-            answer = f"💥 Error while analyzing: {e}"
+if df is not None and user_input:
 
-    # Ajouter à l'historique
-    st.session_state.chat_history.append((question, answer, code))
+    # Bouton Analyze (sans fichier à télécharger)
+    if col_analyze.button("Analyze"):
+        question = user_input
+        with st.spinner("🤖 Processing..."):
+            try:
+                code, answer = process_questions(file_name, question, table_description, generate_dataframe=False)
+            except Exception as e:
+                code = ""
+                answer = f"💥 Error while analyzing: {e}"
 
-    st.markdown(f"**🧑 You:** {question}")
-    col1, col2 = st.columns([2, 3])
-    with col1:
-        st.markdown("**📊 Answer:**")
-        st.success(answer)
-    with col2:
-        st.markdown("**💻 Python Code:**")
-        st.code(code, language="python")
+    if col_download.button("Download Excel File"):
+        question = user_input
+        with st.spinner("🤖 Processing..."):
+            try:
+                code, answer = process_questions(file_name, question, table_description, generate_dataframe=True)
+            except Exception as e:
+                code = ""
+                answer = f"💥 Error while analyzing: {e}"
+
+        st.session_state.chat_history.append((question, answer, code))
+
+        st.markdown(f"**🧑 You:** {question}")
+        col1, col2 = st.columns([2, 3])
+        with col1:
+            st.markdown("**📊 Answer:**")
+            st.success(answer)
+        with col2:
+            st.markdown("**💻 Python Code:**")
+            st.code(code, language="python")
+
+    # # Bouton Download (avec DataFrame généré)
+
+    #     st.session_state.chat_history.append((question, answer, code))
+
+    #     st.markdown(f"**🧑 You:** {question}")
+    #     col1, col2 = st.columns([2, 3])
+    #     with col1:
+    #         st.markdown("**📊 Answer:**")
+    #         st.success(answer)
+    #     with col2:
+    #         st.markdown("**💻 Python Code:**")
+    #         st.code(code, language="python")
