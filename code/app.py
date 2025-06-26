@@ -1,14 +1,6 @@
 import streamlit as st
 import pandas as pd
-from function_numbers_generator import process_questions  # adapt to your own module
-import os
-from dotenv import load_dotenv
-
-# Charger les variables d'environnement depuis le fichier .env
-load_dotenv()
-
-# Retrieve the root
-ROOT_DIR = os.getenv("ROOT_DIR")
+from main import generate_answers
 
 
 st.set_page_config(page_title="DataBot", 
@@ -25,11 +17,11 @@ df = None
 if uploaded_file:
     try:
         # Get file extension
-        file_name = uploaded_file.name.lower()
+        filename = uploaded_file.name.lower()
         
-        if file_name.endswith(".csv"):
+        if filename.endswith(".csv"):
             df = pd.read_csv(uploaded_file)
-        elif file_name.endswith(".xlsx"):
+        elif filename.endswith(".xlsx"):
             df = pd.read_excel(uploaded_file)
         else:
             st.warning("Unsupported file type. Please upload a .csv or .xlsx file.")
@@ -62,32 +54,6 @@ for question, answer, code in st.session_state.chat_history:
         st.markdown("**💻 Python Code:**")
         st.code(code, language="python")
 
-# # --- Input utilisateur ---
-# st.markdown("---")
-# user_input = st.text_input("💬 Your question:", key="user_input")
-
-# if st.button("Analyze") and df is not None and st.session_state.user_input:
-#     question = st.session_state.user_input
-
-#     with st.spinner("🤖 Processing..."):
-#         try:
-#             code, answer = process_questions(file_name, question, table_description, generate_dataframe=)
-#         except Exception as e:
-#             code = ""
-#             answer = f"💥 Error while analyzing: {e}"
-
-#     # Ajouter à l'historique
-#     st.session_state.chat_history.append((question, answer, code))
-
-#     st.markdown(f"**🧑 You:** {question}")
-#     col1, col2 = st.columns([2, 3])
-#     with col1:
-#         st.markdown("**📊 Answer:**")
-#         st.success(answer)
-#     with col2:
-#         st.markdown("**💻 Python Code:**")
-#         st.code(code, language="python")
-
 
 
 # --- Input utilisateur ---
@@ -103,16 +69,29 @@ if df is not None and user_input:
         question = user_input
         with st.spinner("🤖 Processing..."):
             try:
-                code, answer = process_questions(file_name, question, table_description, generate_dataframe=False)
+                code, answer = generate_answers(filename, user_input, table_description, analyzer=True)
             except Exception as e:
                 code = ""
                 answer = f"💥 Error while analyzing: {e}"
+
+        st.session_state.chat_history.append((question, answer, code))
+
+        st.markdown(f"**🧑 You:** {question}")
+        col1, col2 = st.columns([2, 3])
+        with col1:
+            st.markdown("**📊 Answer:**")
+            st.success(answer)
+        with col2:
+            st.markdown("**💻 Python Code:**")
+            st.code(code, language="python")
+
+
 
     if col_download.button("Download Excel File"):
         question = user_input
         with st.spinner("🤖 Processing..."):
             try:
-                code, answer = process_questions(file_name, question, table_description, generate_dataframe=True)
+                code, answer = generate_answers(filename, user_input, table_description, analyzer=False)
             except Exception as e:
                 code = ""
                 answer = f"💥 Error while analyzing: {e}"
